@@ -11,6 +11,7 @@ import (
 
 	cachepolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/cachepolicy"
 	distribution "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distribution"
+	distributiontenant "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distributiontenant"
 	fieldlevelencryptionconfig "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/fieldlevelencryptionconfig"
 	fieldlevelencryptionprofile "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/fieldlevelencryptionprofile"
 	function "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/function"
@@ -32,6 +33,7 @@ func Setup_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		cachepolicy.Setup,
 		distribution.Setup,
+		distributiontenant.Setup,
 		fieldlevelencryptionconfig.Setup,
 		fieldlevelencryptionprofile.Setup,
 		function.Setup,
@@ -59,6 +61,7 @@ func SetupGated_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		cachepolicy.SetupGated,
 		distribution.SetupGated,
+		distributiontenant.SetupGated,
 		fieldlevelencryptionconfig.SetupGated,
 		fieldlevelencryptionprofile.SetupGated,
 		function.SetupGated,

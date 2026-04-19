@@ -13,6 +13,9 @@ func (tr *CachePolicy) Hub() {}
 func (tr *Distribution) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DistributionTenant) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *FieldLevelEncryptionConfig) Hub() {}
 
 // Hub marks this type as a conversion hub.
