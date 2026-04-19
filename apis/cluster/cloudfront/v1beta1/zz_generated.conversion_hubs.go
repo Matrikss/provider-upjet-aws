@@ -13,6 +13,9 @@ func (tr *Function) Hub() {}
 func (tr *KeyGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *MultitenantDistribution) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *OriginAccessControl) Hub() {}
 
 // Hub marks this type as a conversion hub.

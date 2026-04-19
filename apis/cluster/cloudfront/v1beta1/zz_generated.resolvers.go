@@ -448,6 +448,107 @@ func (mg *MonitoringSubscription) ResolveReferences(ctx context.Context, c clien
 	return nil
 }
 
+// ResolveReferences of this MultitenantDistribution.
+func (mg *MultitenantDistribution) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.DefaultCacheBehavior); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("cloudfront.aws.upbound.io", "v1beta2", "CachePolicy", "CachePolicyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyIDRef,
+				Selector:     mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyID")
+		}
+		mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.DefaultCacheBehavior[i3].CachePolicyIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ViewerCertificate); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("acm.aws.upbound.io", "v1beta2", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArn),
+				Extract:      resource.ExtractParamPath("arn", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArnRef,
+				Selector:     mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArnSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArn")
+		}
+		mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArn = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.ViewerCertificate[i3].AcmCertificateArnRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.DefaultCacheBehavior); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("cloudfront.aws.upbound.io", "v1beta2", "CachePolicy", "CachePolicyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyIDRef,
+				Selector:     mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyID")
+		}
+		mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.DefaultCacheBehavior[i3].CachePolicyIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ViewerCertificate); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("acm.aws.upbound.io", "v1beta2", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArn),
+				Extract:      resource.ExtractParamPath("arn", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArnRef,
+				Selector:     mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArnSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArn")
+		}
+		mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArn = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.ViewerCertificate[i3].AcmCertificateArnRef = rsp.ResolvedReference
+
+	}
+
+	return nil
+}
+
 // ResolveReferences of this RealtimeLogConfig.
 func (mg *RealtimeLogConfig) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed

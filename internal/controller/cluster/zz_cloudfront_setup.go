@@ -16,6 +16,7 @@ import (
 	function "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/function"
 	keygroup "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/keygroup"
 	monitoringsubscription "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/monitoringsubscription"
+	multitenantdistribution "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/multitenantdistribution"
 	originaccesscontrol "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/originaccesscontrol"
 	originaccessidentity "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/originaccessidentity"
 	originrequestpolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/originrequestpolicy"
@@ -36,6 +37,7 @@ func Setup_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 		function.Setup,
 		keygroup.Setup,
 		monitoringsubscription.Setup,
+		multitenantdistribution.Setup,
 		originaccesscontrol.Setup,
 		originaccessidentity.Setup,
 		originrequestpolicy.Setup,
@@ -62,6 +64,7 @@ func SetupGated_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 		function.SetupGated,
 		keygroup.SetupGated,
 		monitoringsubscription.SetupGated,
+		multitenantdistribution.SetupGated,
 		originaccesscontrol.SetupGated,
 		originaccessidentity.SetupGated,
 		originrequestpolicy.SetupGated,

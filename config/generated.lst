@@ -156,6 +156,7 @@
 "aws_cloudfront_function",
 "aws_cloudfront_key_group",
 "aws_cloudfront_monitoring_subscription",
+"aws_cloudfront_multitenant_distribution",
 "aws_cloudfront_origin_access_control",
 "aws_cloudfront_origin_access_identity",
 "aws_cloudfront_origin_request_policy",
