@@ -10,6 +10,9 @@ package v1beta1
 func (tr *CachePolicy) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ConnectionGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Distribution) Hub() {}
 
 // Hub marks this type as a conversion hub.

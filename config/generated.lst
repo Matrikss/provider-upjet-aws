@@ -150,6 +150,7 @@
 "aws_cloudformation_stack_set",
 "aws_cloudformation_stack_set_instance",
 "aws_cloudfront_cache_policy",
+"aws_cloudfront_connection_group",
 "aws_cloudfront_distribution",
 "aws_cloudfront_distribution_tenant",
 "aws_cloudfront_field_level_encryption_config",

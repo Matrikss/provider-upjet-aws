@@ -161,6 +161,7 @@ import (
 	stackset "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudformation/stackset"
 	stacksetinstance "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudformation/stacksetinstance"
 	cachepolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/cachepolicy"
+	connectiongroup "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/connectiongroup"
 	distribution "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distribution"
 	distributiontenant "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distributiontenant"
 	fieldlevelencryptionconfig "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/fieldlevelencryptionconfig"
@@ -1177,6 +1178,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		stackset.Setup,
 		stacksetinstance.Setup,
 		cachepolicy.Setup,
+		connectiongroup.Setup,
 		distribution.Setup,
 		distributiontenant.Setup,
 		fieldlevelencryptionconfig.Setup,
@@ -2199,6 +2201,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		stackset.SetupGated,
 		stacksetinstance.SetupGated,
 		cachepolicy.SetupGated,
+		connectiongroup.SetupGated,
 		distribution.SetupGated,
 		distributiontenant.SetupGated,
 		fieldlevelencryptionconfig.SetupGated,

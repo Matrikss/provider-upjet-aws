@@ -10,6 +10,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	cachepolicy "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/cachepolicy"
+	connectiongroup "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/connectiongroup"
 	distribution "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distribution"
 	distributiontenant "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/distributiontenant"
 	fieldlevelencryptionconfig "github.com/upbound/provider-aws/v2/internal/controller/cluster/cloudfront/fieldlevelencryptionconfig"
@@ -32,6 +33,7 @@ import (
 func Setup_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		cachepolicy.Setup,
+		connectiongroup.Setup,
 		distribution.Setup,
 		distributiontenant.Setup,
 		fieldlevelencryptionconfig.Setup,
@@ -60,6 +62,7 @@ func Setup_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 func SetupGated_cloudfront(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		cachepolicy.SetupGated,
+		connectiongroup.SetupGated,
 		distribution.SetupGated,
 		distributiontenant.SetupGated,
 		fieldlevelencryptionconfig.SetupGated,

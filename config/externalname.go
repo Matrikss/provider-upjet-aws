@@ -76,9 +76,11 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 
 	// cloudfront
 	//
-	// Imported by using the distribution id: E1234567890
+	// Imported by using the id: CGROUPT123EXAMPLE
+	"aws_cloudfront_connection_group": config.IdentifierFromProvider,
+	// Imported by using the id: TENANT123EXAMPLE
 	"aws_cloudfront_distribution_tenant": config.IdentifierFromProvider,
-	// Imported by using the distribution id: E1234567890
+	// Imported by using the id: E74FTE3AEXAMPLE
 	"aws_cloudfront_multitenant_distribution": config.IdentifierFromProvider,
 	// Cloudfront VPC Origin can be imported using the ID
 	"aws_cloudfront_vpc_origin": identifierFromProviderWithDefaultStub("vo_stub000000000000000000"),
