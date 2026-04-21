@@ -447,6 +447,7 @@ import (
 	accessentry "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/accessentry"
 	accesspolicyassociation "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/accesspolicyassociation"
 	addon "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/addon"
+	capability "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/capability"
 	clustereks "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/cluster"
 	clusterauth "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/clusterauth"
 	fargateprofile "github.com/upbound/provider-aws/v2/internal/controller/cluster/eks/fargateprofile"
@@ -1464,6 +1465,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		accessentry.Setup,
 		accesspolicyassociation.Setup,
 		addon.Setup,
+		capability.Setup,
 		clustereks.Setup,
 		clusterauth.Setup,
 		fargateprofile.Setup,
@@ -2487,6 +2489,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		accessentry.SetupGated,
 		accesspolicyassociation.SetupGated,
 		addon.SetupGated,
+		capability.SetupGated,
 		clustereks.SetupGated,
 		clusterauth.SetupGated,
 		fargateprofile.SetupGated,
