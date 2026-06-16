@@ -99,6 +99,8 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 
 	// ec2
 	//
+	// EC2 Capacity Block Reservations can be imported using the id: cr-06f69c6d91ca1d710
+	"aws_ec2_capacity_block_reservation": identifierFromProviderWithDefaultStub("cr-06f69c6d91ca1d710"),
 	// Imported by using the id: sgr-02108b27edd666983
 	"aws_vpc_security_group_egress_rule": vpcSecurityGroupRule(),
 	// Imported by using the id: sgr-02108b27edd666983
@@ -140,6 +142,13 @@ var TerraformPluginFrameworkExternalNameConfigs = map[string]config.ExternalName
 	//
 	// admin
 	"aws_mq_user": mqUser(),
+
+	// networkmonitor
+	//
+	// import by monitor_name
+	"aws_networkmonitor_monitor": config.ParameterAsIdentifier("monitor_name"),
+	// import by probe_id
+	"aws_networkmonitor_probe": networkmonitorProbe(),
 
 	// opensearchserverless
 	//
@@ -1269,7 +1278,7 @@ var TerraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"aws_ecs_service": config.TemplatedStringAsIdentifier("name", fullARNTemplate("ecs", "service/{{ .parameters.cluster }}/{{ .external_name }}")),
 	// Imported using ARN that has a random substring, revision at the end:
 	// arn:aws:ecs:us-east-1:012345678910:task-definition/mytaskfamily:123
-	"aws_ecs_task_definition": config.IdentifierFromProvider,
+	"aws_ecs_task_definition": ecsTaskDefinition(),
 
 	// efs
 	//
@@ -3809,6 +3818,66 @@ func ecrRepositoryCreationTemplate() config.ExternalName {
 			return "", errors.New("attribute \"prefix\" missing from TF state")
 		}
 		return prefix, nil
+	}
+	return e
+}
+
+func networkmonitorProbe() config.ExternalName {
+	e := config.IdentifierFromProvider
+	// must satisfy regular expression pattern: probe-[a-z0-9A-Z-]{21,64}
+	const placeholderProbeID = "probe-0000000000-xpstub-0000000000"
+	const idSeparator = ","
+	// ID format: monitor_name,probe_id
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		id, ok := tfstate["id"].(string)
+		if !ok || id == "" {
+			return "", errors.New("cannot find id in tfstate")
+		}
+		idParts := strings.Split(id, idSeparator)
+		if len(idParts) != 2 || idParts[0] == "" || idParts[1] == "" {
+			return "", errors.Errorf("unexpected format for ID (%v)", id)
+		}
+		return idParts[1], nil
+	}
+	e.GetIDFn = func(_ context.Context, externalName string, parameters map[string]any, _ map[string]any) (string, error) {
+		monitorName, ok := parameters["monitor_name"].(string)
+		if !ok || monitorName == "" {
+			return "", errors.New("parameter monitor_name missing from resource configuration")
+		}
+		if externalName == "" {
+			return fmt.Sprintf("%s,%s", monitorName, placeholderProbeID), nil
+		}
+		return fmt.Sprintf("%s,%s", monitorName, externalName), nil
+	}
+	e.IdentifierFields = []string{"monitor_name"}
+	return e
+}
+
+func ecsTaskDefinition() config.ExternalName {
+	e := config.IdentifierFromProvider
+	const (
+		arnSections   = 6
+		arnPrefix     = "arn"
+		arnECSService = "ecs"
+	)
+
+	// resourceTaskDefinitionRead uses d.Get("arn") instead of d.Id() to call
+	// DescribeTaskDefinition. On a cold-start observe, "arn" is a computed-only
+	// attribute and is not present in params, so the API call goes out with an
+	// empty identifier and AWS returns a 400 that upjet surfaces as "external
+	// resource does not exist". Seed params["arn"] from the external name so the
+	// read always has a non-empty identifier.
+	e.SetIdentifierArgumentFn = func(base map[string]any, externalName string) {
+		// only set `arn` if the external name is a full ARN
+		arnParts := strings.SplitN(externalName, ":", arnSections)
+		if len(arnParts) != arnSections ||
+			arnParts[0] != arnPrefix ||
+			arnParts[2] != arnECSService {
+			return
+		}
+		if arn, _ := base["arn"].(string); arn == "" && externalName != "" {
+			base["arn"] = externalName
+		}
 	}
 	return e
 }

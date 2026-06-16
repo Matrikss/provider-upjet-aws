@@ -324,6 +324,7 @@ import (
 	amicopy "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/amicopy"
 	amilaunchpermission "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/amilaunchpermission"
 	availabilityzonegroup "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/availabilityzonegroup"
+	capacityblockreservation "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/capacityblockreservation"
 	capacityreservation "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/capacityreservation"
 	carriergateway "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/carriergateway"
 	customergateway "github.com/upbound/provider-aws/v2/internal/controller/cluster/ec2/customergateway"
@@ -713,6 +714,8 @@ import (
 	transitgatewayconnectpeerassociation "github.com/upbound/provider-aws/v2/internal/controller/cluster/networkmanager/transitgatewayconnectpeerassociation"
 	transitgatewayregistration "github.com/upbound/provider-aws/v2/internal/controller/cluster/networkmanager/transitgatewayregistration"
 	vpcattachment "github.com/upbound/provider-aws/v2/internal/controller/cluster/networkmanager/vpcattachment"
+	monitor "github.com/upbound/provider-aws/v2/internal/controller/cluster/networkmonitor/monitor"
+	probe "github.com/upbound/provider-aws/v2/internal/controller/cluster/networkmonitor/probe"
 	sink "github.com/upbound/provider-aws/v2/internal/controller/cluster/oam/sink"
 	domainopensearch "github.com/upbound/provider-aws/v2/internal/controller/cluster/opensearch/domain"
 	domainpolicyopensearch "github.com/upbound/provider-aws/v2/internal/controller/cluster/opensearch/domainpolicy"
@@ -1350,6 +1353,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		amicopy.Setup,
 		amilaunchpermission.Setup,
 		availabilityzonegroup.Setup,
+		capacityblockreservation.Setup,
 		capacityreservation.Setup,
 		carriergateway.Setup,
 		customergateway.Setup,
@@ -1739,6 +1743,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		transitgatewayconnectpeerassociation.Setup,
 		transitgatewayregistration.Setup,
 		vpcattachment.Setup,
+		monitor.Setup,
+		probe.Setup,
 		sink.Setup,
 		domainopensearch.Setup,
 		domainpolicyopensearch.Setup,
@@ -2382,6 +2388,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		amicopy.SetupGated,
 		amilaunchpermission.SetupGated,
 		availabilityzonegroup.SetupGated,
+		capacityblockreservation.SetupGated,
 		capacityreservation.SetupGated,
 		carriergateway.SetupGated,
 		customergateway.SetupGated,
@@ -2771,6 +2778,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		transitgatewayconnectpeerassociation.SetupGated,
 		transitgatewayregistration.SetupGated,
 		vpcattachment.SetupGated,
+		monitor.SetupGated,
+		probe.SetupGated,
 		sink.SetupGated,
 		domainopensearch.SetupGated,
 		domainpolicyopensearch.SetupGated,
